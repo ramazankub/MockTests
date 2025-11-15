@@ -2,7 +2,7 @@ package Unknown.spy;
 
 public class UserRepository {
     public String findUserNameById(int id) {
-        return "User from DB";
+        return "Real user from DB";
     }
 
     public boolean exists(int id) {
