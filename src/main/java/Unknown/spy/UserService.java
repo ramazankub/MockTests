@@ -9,7 +9,7 @@ public class UserService {
 
     public String getGreeting(int id) {
         if(!userRepository.exists(id)) {
-            return "User not found";
+            return "User was not found";
         }
 
         String name = userRepository.findUserNameById(id);
