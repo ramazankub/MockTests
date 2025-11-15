@@ -1,0 +1,50 @@
+name: "Mock tests action"
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  commit-validation:
+    name: Validate commit message
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Get commit message
+        id: get_message
+        run: |
+          COMMIT_MSG=$(git log -1 --pretty=format:%s)
+          echo "message=$COMMIT_MSG" >> $GITHUB_OUTPUT
+
+      - name: Validate message format
+        run: |
+          echo "Commit message: '${{ steps.get_message.outputs.message }}'"
+
+          # REGEX: feat|fix|docs|ci|refactor|test|chore
+          if [[ ! "${{ steps.get_message.outputs.message }}" =~ ^(feat|fix|docs|ci|refactor|test|chore)(\(.+\))?:\ .+ ]]; then
+            echo "❌ Invalid commit message format!"
+            echo "Format should be: type(scope): description"
+            echo "Example: feat(api): add login test"
+            exit 1
+          fi
+
+          echo "✅ Commit message is valid"
+
+  telegram-notify:
+    name: Send Telegram Notification
+    runs-on: ubuntu-latest
+    needs: commit-validation
+    if: always()
+
+    steps:
+      - name: Send message to Telegram
+        run: |
+          STATUS="${{ needs.commit-validation.result }}"
+
+          if [ "$STATUS" = "success" ]; th
+
+
+
