@@ -25,11 +25,12 @@ jobs:
           echo "Commit message: '${{ steps.get_message.outputs.message }}'"
 
           if [[ ! "${{ steps.get_message.outputs.message }}" =~ ^(feat|fix|docs|ci|refactor|test|chore)(\(.+\))?:\ .+ ]]; then
-            echo "❌ Invalid commit message format!"
+            echo "Invalid commit message format!"
+            echo "Format: type(scope): description"
             exit 1
           fi
 
-          echo "✅ Commit message is valid"
+          echo "Commit message is valid"
 
 
   telegram-notify:
@@ -44,12 +45,11 @@ jobs:
           STATUS="${{ needs.commit-validation.result }}"
 
           if [ "$STATUS" = "success" ]; then
-            TEXT="🔥 *CI REPORT*\n\nКоммит прошёл успешно.\nВетка: *${{ github.ref_name }}*\nNeuroCore online."
+            TEXT="CI REPORT\n\nCommit passed.\nBranch: ${{ github.ref_name }}\nNeuroCore online."
           else
-            TEXT="💥 *CI ERROR*\n\nКоммит сломал пайплайн.\nВетка: *${{ github.ref_name }}*"
+            TEXT="CI ERROR\n\nCommit failed.\nBranch: ${{ github.ref_name }}"
           fi
 
           curl -s -X POST "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage" \
             -d chat_id="${{ secrets.TELEGRAM_CHAT_ID }}" \
-            -d parse_mode="Markdown" \
             -d text="$TEXT"
