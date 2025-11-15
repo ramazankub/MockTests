@@ -44,7 +44,16 @@ jobs:
         run: |
           STATUS="${{ needs.commit-validation.result }}"
 
-          if [ "$STATUS" = "success" ]; th
+          if [ "$STATUS" = "success" ]; then
+            TEXT="🔥 CI REPORT\n\nКоммит прошёл успешно.\nNeuroCore online."
+          else
+            TEXT="💥 CI ERROR\n\nКоммит сломал пайплайн."
+          fi
+
+          curl -s -X POST "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage" \
+            -d chat_id="${{ secrets.TELEGRAM_CHAT_ID }}" \
+            -d text="$TEXT"
+  
 
 
 
