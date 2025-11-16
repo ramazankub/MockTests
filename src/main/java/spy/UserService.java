@@ -1,4 +1,4 @@
-package Unknown.spy;
+package spy;
 
 public class UserService {
     private final UserRepository userRepository;

@@ -1,6 +1,6 @@
-package Unknown.mockTest;
-import Unknown.mocks.Computer;
-import Unknown.mocks.Person;
+package mockTest;
+import mocks.Computer;
+import mocks.Person;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

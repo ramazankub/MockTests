@@ -1,4 +1,4 @@
-package Unknown.spy;
+package spy;
 
 public class UserRepository {
     public String findUserNameById(int id) {

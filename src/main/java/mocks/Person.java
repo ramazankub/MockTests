@@ -1,4 +1,4 @@
-package Unknown.mocks;
+package mocks;
 
 public class Person {
     private Computer computer;

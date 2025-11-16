@@ -1,7 +1,7 @@
 package spyTest;
 
-import Unknown.spy.UserRepository;
-import Unknown.spy.UserService;
+import spy.UserRepository;
+import spy.UserService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
